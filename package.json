@@ -1,0 +1,38 @@
+{
+  "name": "lemon",
+  "version": "0.0.1",
+  "description": "Another simple MVW framework – inspired by AngularJS.",
+  "main": "index.js",
+  "author": "Michael Ortali <hello@xethorn.net>",
+  "dependencies": {
+    "assert": "^1.1.2",
+    "bower": "^1.3.11",
+    "chai": "^1.9.2",
+    "chalk": "^0.5.1",
+    "core-util-is": "^1.0.1",
+    "inherits": "^2.0.1",
+    "isarray": "0.0.1",
+    "karma": "^0.12.24",
+    "karma-chai": "^0.1.0",
+    "karma-closure": "^0.1.0",
+    "karma-coverage": "^0.2.6",
+    "karma-coveralls": "^0.1.4",
+    "karma-junit-reporter": "^0.2.2",
+    "karma-mocha": "^0.1.9",
+    "karma-mocha-reporter": "^0.3.1",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-sinon-chai": "^0.2.0",
+    "log-symbols": "^1.0.1",
+    "mocha": "^1.21.4",
+    "require-dir": "^0.1.0",
+    "run-sequence": "^1.0.1",
+    "sinon": "^1.10.3",
+    "sinon-chai": "^2.5.0"
+  },
+  "scripts": {
+    "install": "./node_modules/bower/bin/bower install"
+  },
+  "devDependencies": {
+    "coveralls": "^2.11.2"
+  }
+}

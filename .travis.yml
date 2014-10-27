@@ -1,0 +1,8 @@
+language: node_js
+node_js:
+    - "0.11"
+
+install: "npm install"
+script: "node node_modules/karma/bin/karma start tests/karma.conf.js --browsers PhantomJS --single-run"
+after_success:
+    - "node node_modules/coveralls/bin/coveralls.js < coverage/lcov.info"
