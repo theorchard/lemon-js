@@ -5,12 +5,14 @@
  */
 
 var files = [
-    __dirname + 'lemon/lemon.js',
-    __dirname + 'lemon/views.js',
-    __dirname + 'lemon/router.js',
-    __dirname + 'lemon/app.js',
-    __dirname + 'lemon/util.js']
+    __dirname + '/lemon/lemon.js',
+    __dirname + '/lemon/views.js',
+    __dirname + '/lemon/router.js',
+    __dirname + '/lemon/app.js',
+    __dirname + '/lemon/util.js']
 
 module.exports = {
+    dir: __dirname,
+    bower: __dirname + '/bower_components/', 
     files: files
 };
