@@ -102,7 +102,7 @@ _.extend(lemon.Router.prototype,
     /**
      * Handler for popstate events.
      *
-     * @param {jQuery.Event} evt The jQuery event.
+     * @param {jQuery.Event|Event} evt The jQuery event.
      */
     onPopState: function(evt) {
         evt = evt.originalEvent || evt;
