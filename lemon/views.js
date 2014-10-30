@@ -197,7 +197,7 @@ lemon.View = Backbone.View.extend(/** @lends {lemon.View.prototype} */{
         } else if (link instanceof Object) {
             link.preventDefault();
             link.stopPropagation();
-            url = /** @type {string} */($(link.target).attr('href'));
+            url = /** @type {string} */($(link.currentTarget).attr('href'));
         } else {
             throw 'The url is not defined, the navigation is not possible.';
         }
