@@ -52,16 +52,20 @@ lemon.View = Backbone.View.extend(/** @lends {lemon.View.prototype} */{
      * @param {Object} options The options of the view. Some of the params
      *     includes:
      */
-    constructor: function(options) {
+    constructor: function(options, $parent) {
         Backbone.View.prototype.constructor.call(this, options);
 
         options = options || {};
         this.setProperties(options);
 
-        var $el = $('#' + options['id']);
+        var id = '#' + options['id'];
+        var $el = $(id);
+        if ($parent && !$el.length) {
+            $el = $parent.find(id);
+        }
+
         if ($el.length) {
-            this.setElement($('#' + options['id']));
-            this.$el.removeAttr('id');
+            this.setElement($el);
         }
     },
 
@@ -103,8 +107,9 @@ lemon.View = Backbone.View.extend(/** @lends {lemon.View.prototype} */{
         this['events'] = this['events'] || {};
         this['events']['click a'] = this.navigate;
 
+        var $parent = this.$el;
         _.each(options['children'], function(child) {
-            var view = lemon.views.initialize(child);
+            var view = lemon.views.initialize(child, $parent);
             this.addChild(view);
         }, this);
     },
@@ -291,9 +296,10 @@ lemon.views.getMainView = function(view) {
  *
  * @param {Object} view The json that describes the view. The path of the view
  *     defines which view will be instantiated.
+ * @param {jQuery=} $parent Optional parent.
  * @return {lemon.View} the View.
  */
-lemon.views.initialize = function(view) {
+lemon.views.initialize = function(view, $parent) {
     var viewName = view.path;
-    return new /** @constructor */ (lemon.views.all[viewName])(view);
+    return new /** @constructor */ (lemon.views.all[viewName])(view, $parent);
 };
