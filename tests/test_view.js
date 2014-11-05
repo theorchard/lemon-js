@@ -81,7 +81,7 @@ describe('Initializing a view', function() {
     });
 
 
-    // When a view has found its html, it removes the id.
+    // When a view has found its html.
     it('Should look for the its element and attach it to this.el', function() {
         var viewId = 'ViewID';
         var $div = $('<div>').attr('id', viewId);
@@ -90,7 +90,6 @@ describe('Initializing a view', function() {
         assert.equal($div.attr('id'), viewId);
         var view = initialize('exist', viewId)();
         assert.equal(view.el, $div[0]);
-        assert.notEqual($div.attr('id'), viewId);
     });
 
 
