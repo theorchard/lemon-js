@@ -13,7 +13,6 @@ var files = [
 
 module.exports = {
     dir: __dirname,
-    bower: __dirname + '/bower_components/',
-    files: files,
-    tests: __dirname + '/lemon/tests.js'
+    bower: __dirname + '/bower_components/', 
+    files: files
 };
