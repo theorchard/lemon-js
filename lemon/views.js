@@ -131,7 +131,7 @@ lemon.View = Backbone.View.extend(/** @lends {lemon.View.prototype} */{
         var callback = _.bind(Backbone.View.prototype.render, this);
         var ajaxOptions = {
             'url': '/view/',
-            'type': 'POST',
+            'type': 'GET',
             'data': JSON.stringify(this.getConfig()),
             'dataType': 'json'
         };

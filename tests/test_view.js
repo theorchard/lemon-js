@@ -151,7 +151,7 @@ describe('Rendering a view', function() {
     });
 
     var respondWith = function(response) {
-        server.respondWith('POST', '/view/', [200,
+        server.respondWith('GET', /view\/.*/, [200,
             {'Content-Type': 'application/json'},
             JSON.stringify(response)]);
     }
@@ -167,7 +167,6 @@ describe('Rendering a view', function() {
         var View = lemon.views.register('Test');
         var testView = new View();
         testView.render();
-
         server.respond();
         assert.equal(testView.$el.html(), html);
     });
