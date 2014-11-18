@@ -22,15 +22,16 @@ lemon.fixtures.view.createView = function(options) {
     options['name'] = options['name'] || 'TestView';
 
     var view = lemon.View.extend({
+        name: 'TestView',
         render: function() {
             view.renderSpy();
             if (this.params.fail) {
                 return false;
             }
-
             return true;
         },
     });
+
     view.renderSpy = sinon.spy();
     return view;
 };

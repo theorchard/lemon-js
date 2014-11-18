@@ -1,0 +1,7 @@
+<div class="hello">
+    Hello World
+
+    {% if params.fail %}
+        {{ fail() }}
+    {% endif %}
+</div>

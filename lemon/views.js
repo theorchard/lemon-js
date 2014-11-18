@@ -183,6 +183,24 @@ lemon.View = Backbone.View.extend(/** @lends {lemon.View.prototype} */{
     },
 
     /**
+     * Get full path.
+     *
+     * Each view is generated from a specific path. By knowing the name of the
+     * view, the path can be recreated.
+     *
+     * @return {string} the view path.
+     */
+    getPath: function() {
+        var folders = this.name.split('/');
+        var fileName = folders[folders.length - 1];
+        return (
+            folders.slice(0, folders.length - 1).join('/') +
+            fileName + '/' +
+            fileName +
+            '.nunjucks');
+    },
+
+    /**
      * Navigate to a url.
      *
      * This method can be called from two different operations: as an event
