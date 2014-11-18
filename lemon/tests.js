@@ -71,7 +71,8 @@ _.extend(lemon.tests.TestSuite.prototype,
         view.render = function() {
             var tpl = lemon.tests.environment.getTemplate(this.getPath());
             var html = tpl.render({params: this.params, fetch: this.fetch});
-            this.setElement($(html));
+            var $html = $('<div>' + html + '</div>');
+            this.setElement($html);
         };
         return view;
     },
@@ -81,6 +82,7 @@ _.extend(lemon.tests.TestSuite.prototype,
      *
      * @param {Function} fn Optional function callback. If defined, the test
      *     will continue.
+     * @param {Array.<string>?} exclude The list of all the states to exclude.
      * @param {boolean} successOnly Only run the automated tests that are
      *     flagged as successful.
      */
@@ -101,7 +103,7 @@ _.extend(lemon.tests.TestSuite.prototype,
                 method = describe;
             }
 
-            method(test.title, function() {
+            method('State: ' + test.title, function() {
                 var view = self.createView(test);
                 if (test.success !== false) {
                     view.render();
@@ -112,7 +114,11 @@ _.extend(lemon.tests.TestSuite.prototype,
                 if (fn) {
                     $('body').append(view.$el);
                     fn(view);
-                    view.remove();
+                    if (method == describe) {
+                        after(view.remove.bind(view));
+                    } else {
+                        view.remove();
+                    }
                 }
             });
         });
@@ -128,7 +134,7 @@ _.extend(lemon.tests.TestSuite.prototype,
     describe: function(description, exclude, fn) {
         var self = this;
 
-        describe(description, function() {
+        describe('Scenario: ' + description, function() {
             self.run(fn, exclude || [], true);
         });
     },

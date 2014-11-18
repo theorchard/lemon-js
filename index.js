@@ -15,5 +15,6 @@ module.exports = {
     dir: __dirname,
     bower: __dirname + '/bower_components/',
     files: files,
-    tests: __dirname + '/lemon/tests.js'
+    tests: __dirname + '/lemon/tests.js',
+    utils: __dirname + '/utils.js',
 };
