@@ -69,15 +69,19 @@ describe('Running the tests', function() {
     });
 
     var spy = sinon.spy();
-    suite.describe('Perfom automated tests on manual tests.', null, spy);
+
+    suite.describe('Perfom automated tests on manual tests.', null, function(view) {
+        spy();
+
+        it('renders the template', function() {
+            assert.include(view.$el.html(), 'Hello World');
+        });
+    });
+
     describe('Running a manual test', function() {
         it('run within successful automated tests', function() {
             assert.ok(spy.called);
             assert.equal(spy.callCount, 2);
-        });
-
-        it('renders the view in all cases', function() {
-            assert.ok(view.renderSpy.called);
         });
     });
 

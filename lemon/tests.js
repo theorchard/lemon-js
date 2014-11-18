@@ -18,7 +18,9 @@
  *         var tests = lemon.tests.init(app.ViewName, app.ViewName.yml);
  *
  *         tests.describe('Test 1', null, function(view) {
- *             // test.
+ *             it('can handle child events', function() {
+ *                 // Something
+ *             })
  *         });
  *     });
  *
@@ -58,11 +60,19 @@ _.extend(lemon.tests.TestSuite.prototype,
     /**
      * Create a view from a view configuration.
      *
+     * The method for this specific view is altered so it can be client side
+     * rendered.
+     *
      * @params {Object} view The view configuration contains "params" and "api"
      *      which are both required (even if empty.)
      */
     createView: function(view) {
         var view = new this.viewClass({params: view.params, api: view.api});
+        view.render = function() {
+            var tpl = lemon.tests.environment.getTemplate(this.getPath());
+            var html = tpl.render({params: this.params, fetch: this.fetch});
+            this.setElement($(html));
+        };
         return view;
     },
 
@@ -83,12 +93,20 @@ _.extend(lemon.tests.TestSuite.prototype,
                 return;
             }
 
-            it(test.title, function() {
+            // `it` cannot include other `it`. In the case of the manual
+            // tests that needs to run within the automated tests, the `it`
+            // should become a `describe`.
+            var method = it;
+            if (fn) {
+                method = describe;
+            }
+
+            method(test.title, function() {
                 var view = self.createView(test);
                 if (test.success !== false) {
                     view.render();
                 } else {
-                    assert.isFalse(view.render());
+                    assert.throw(view.render, Error);
                 }
 
                 if (fn) {
@@ -126,3 +144,19 @@ _.extend(lemon.tests.TestSuite.prototype,
 lemon.tests.init = function(viewClass, viewConfig) {
     return new lemon.tests.TestSuite(viewClass, viewConfig)
 };
+
+
+/**
+ * Template loader.
+ *
+ * @type {nunjucks.WebLoader}
+ */
+lemon.tests.loader = new nunjucks.WebLoader(window.tests.viewPath);
+
+
+/**
+ * Template environment.
+ *
+ * @type {nunjucks.Environment}
+ */
+lemon.tests.environment = new nunjucks.Environment(lemon.tests.loader);

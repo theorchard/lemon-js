@@ -16,11 +16,10 @@
  */
 
 // Paths
-var rootPath = '../';
-var bowerPath = rootPath + 'bower_components/';
+var bowerPath = 'bower_components/';
 var closurePath = bowerPath + 'closurelibrary/closure/goog/';
-var lemon = rootPath + 'lemon/**.js';
-var lemonTests = rootPath + 'tests/**/*.js';
+var lemon = 'lemon/**.js';
+var lemonTests = 'tests/**/*.js';
 
 
 // Preprocessing some of the data (dependencies mostly.)
@@ -30,10 +29,14 @@ preprocessors[lemon] = ['closure', 'coverage'];
 preprocessors[closurePath + 'base.js'] = ['closure-deps'];
 
 var karmaConfig = {
+    basePath: '../',
     browsers: ['PhantomJS'],
-    frameworks: ['mocha', 'chai', 'closure', 'sinon-chai'],
+    frameworks: ['mocha', 'chai', 'closure', 'sinon-chai', 'nunjucks'],
 
     files: [
+        // Global vars.
+        'tests/config.js',
+
         // closure base
         closurePath + 'base.js',
 
@@ -49,7 +52,10 @@ var karmaConfig = {
         {pattern: lemon, included: false},
 
         // external deps
-        {pattern: closurePath + 'deps.js', included: false, served: false}
+        {pattern: closurePath + 'deps.js', included: false, served: false},
+
+        // Serve templates
+        {pattern: 'tests/fixtures/TestView/TestView.nunjucks', included: false, served: true}
     ],
 
     preprocessors: preprocessors,
@@ -61,14 +67,14 @@ var karmaConfig = {
         'junit'],
 
     junitReporter: {
-        outputFile: '../build/jsunit.xml',
+        outputFile: 'build/jsunit.xml',
         suite: ''
     },
 
     // Add coverage
     coverageReporter: {
         type : 'lcovonly',
-        dir: '../coverage/',
+        dir: 'coverage/',
         subdir: '.',
         file: 'lcov.info'
     }
