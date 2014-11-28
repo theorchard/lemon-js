@@ -67,6 +67,8 @@ lemon.View = Backbone.View.extend(/** @lends {lemon.View.prototype} */{
         if ($el.length) {
             this.setElement($el);
         }
+        
+        this.onReady();
     },
 
     /**
@@ -271,7 +273,13 @@ lemon.View = Backbone.View.extend(/** @lends {lemon.View.prototype} */{
      * @param {Function=} callback Callback.
      * @override
      */
-    onNavigate: goog.nullFunction
+    onNavigate: goog.nullFunction,
+    
+    
+    /** 
+     * Handler when the view is ready.
+     */
+    onReady: goog.nullFunction
 });
 
 
