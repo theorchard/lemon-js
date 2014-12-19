@@ -52,7 +52,7 @@ describe('Initializing a view', function() {
         return function() {
             return lemon.views.initialize({
                 path: name,
-                id: viewId
+                element_id: viewId
             });
         }
     };
@@ -83,11 +83,11 @@ describe('Initializing a view', function() {
 
     // When a view has found its html.
     it('Should look for the its element and attach it to this.el', function() {
-        var viewId = 'ViewID';
+        var viewId = 'ViewId2';
         var $div = $('<div>').attr('id', viewId);
         $('body').append($div);
-
         assert.equal($div.attr('id'), viewId);
+        debugger;
         var view = initialize('exist', viewId)();
         assert.equal(view.el, $div[0]);
     });
@@ -180,7 +180,7 @@ describe('Rendering a view', function() {
 
         respondWith({
             html: '<div>' + html + '</div>',
-            tree: {"children": [{"id": "children1", "path": "Test"}]}
+            tree: {"children": [{"element_id": "children1", "path": "Test"}]}
         });
 
         var testView = new View();
@@ -341,8 +341,8 @@ describe('Clicking on links in the view', function() {
 
         $('body').html(html);
 
-        mainView = new Parent({id: 1});
-        mainView.addChild(new Child({id: 2}));
+        mainView = new Parent({element_id: 1});
+        mainView.addChild(new Child({element_id: 2}));
     });
 
     afterEach(function() {

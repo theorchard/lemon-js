@@ -56,18 +56,8 @@ lemon.View = Backbone.View.extend(/** @lends {lemon.View.prototype} */{
         Backbone.View.prototype.constructor.call(this, options);
 
         options = options || {};
+        options['parent'] = $parent;
         this.setProperties(options);
-
-        var id = '#' + options['id'];
-        var $el = $(id);
-        if ($parent && !$el.length) {
-            $el = $parent.find(id);
-        }
-
-        if ($el.length) {
-            this.setElement($el);
-        }
-        
         this.onReady();
     },
 
@@ -106,12 +96,22 @@ lemon.View = Backbone.View.extend(/** @lends {lemon.View.prototype} */{
         this.children = [];
         this.params = options['params'] || {};
         this.fetch = options['fetch'] || {};
+        this.id = options['id'];
         this['events'] = this['events'] || {};
         this['events']['click a'] = this.navigate;
 
-        var $parent = this.$el;
+        var id = '#' + options['element_id'];
+        var $el = $(id);
+        if (options['parent'] && !$el.length) {
+            $el = options['parent'].find(id);
+        }
+
+        if ($el.length) {
+            this.setElement($el);
+        }
+
         _.each(options['children'], function(child) {
-            var view = lemon.views.initialize(child, $parent);
+            var view = lemon.views.initialize(child, this.$el);
             this.addChild(view);
         }, this);
     },
@@ -134,7 +134,9 @@ lemon.View = Backbone.View.extend(/** @lends {lemon.View.prototype} */{
         var ajaxOptions = {
             'url': '/view/',
             'type': 'GET',
-            'data': JSON.stringify(this.getConfig()),
+            'data': {
+                'data': JSON.stringify(this.getConfig())
+            },
             'dataType': 'json'
         };
 
@@ -157,7 +159,9 @@ lemon.View = Backbone.View.extend(/** @lends {lemon.View.prototype} */{
         this.setElement(html);
 
         // Set the view configuration.
+        this.reset();
         this.setProperties(json['tree']);
+        this.onReady();
     },
 
 
@@ -170,9 +174,10 @@ lemon.View = Backbone.View.extend(/** @lends {lemon.View.prototype} */{
      */
     getConfig: function(withChildren) {
         var config = {
-            'path': this.name,
+            'fetch': this.fetch,
+            'id': this.id,
             'params': this.params,
-            'fetch': this.fetch
+            'path': this.name
         };
 
         if (withChildren && this.children) {
@@ -267,6 +272,20 @@ lemon.View = Backbone.View.extend(/** @lends {lemon.View.prototype} */{
     },
 
     /**
+     * Get child by its id.
+     *
+     * @param {string} id The child identifier.
+     * @return {lemon.View?}
+     */
+    getChildById: function(id) {
+        var view = _.find(this.children, function(child) {
+            return child.id === id;
+        });
+
+        return /** @type {lemon.View?} */ (view);
+    },
+
+    /**
      * Event handler for navigation.
      *
      * @param {jQuery.Event} evt The jQuery event.
@@ -274,12 +293,17 @@ lemon.View = Backbone.View.extend(/** @lends {lemon.View.prototype} */{
      * @override
      */
     onNavigate: goog.nullFunction,
-    
-    
-    /** 
+
+
+    /**
      * Handler when the view is ready.
      */
-    onReady: goog.nullFunction
+    onReady: goog.nullFunction,
+
+    /**
+     * Reset the view.
+     */
+    reset: goog.nullFunction
 });
 
 
