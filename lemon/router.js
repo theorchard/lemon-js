@@ -139,7 +139,10 @@ lemon.Route = function(route) {
      * Keys of the url.
      * @type {Array.<string>}
      */
-    this.keys = route['keys'] || [];
+    this.keys = /** @type {Array.<string>} */ (_.map(route['keys'] || [],
+        function(key) {
+            return key.replace(new RegExp('<(.+):'), '<');
+        }));
 
     /**
      * Params of the `lemon.View`.
@@ -171,7 +174,6 @@ _.extend(lemon.Route.prototype,
      */
     populate: function(params, replacements) {
         var clone = {};
-
         _.map(params, function(value, key) {
             if (_.isString(value)) {
                 if (replacements[value]) {

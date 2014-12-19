@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "description": "Another simple MVW framework – inspired by AngularJS.",
   "main": "index.js",
-  "author": "Michael Ortali <hello@xethorn.net>",
+  "author": {
+    "name": "Michael Ortali",
+    "email": "hello@xethorn.net"
+  },
   "dependencies": {
     "assert": "^1.1.2",
     "bower": "^1.3.11",
@@ -36,5 +39,14 @@
   },
   "devDependencies": {
     "coveralls": "^2.11.2"
-  }
+  },
+  "readme": "LemonJs\n",
+  "readmeFilename": "Readme.md",
+  "_id": "lemon@0.0.1",
+  "dist": {
+    "shasum": "550eb7f0c4e77ef24616433f1fe19f59681bfd79"
+  },
+  "_resolved": "git://github.com/theorchard/lemon-js#2ae4c1a3e45881f2bc206288a183ff5b7fefa797",
+  "_from": "git://github.com/theorchard/lemon-js",
+  "_fromGithub": true
 }

@@ -110,10 +110,11 @@ lemon.View = Backbone.View.extend(/** @lends {lemon.View.prototype} */{
             this.setElement($el);
         }
 
+        var self = this;
         _.each(options['children'], function(child) {
-            var view = lemon.views.initialize(child, this.$el);
-            this.addChild(view);
-        }, this);
+            var view = lemon.views.initialize(child, self.$el);
+            self.addChild(view);
+        });
     },
 
 
@@ -168,7 +169,7 @@ lemon.View = Backbone.View.extend(/** @lends {lemon.View.prototype} */{
     /**
      * Return the configuration of the view.
      *
-     * @param {Boolean} withChildren If the children need to be included in
+     * @param {boolean} withChildren If the children need to be included in
      *      this list.
      * @return {Object} the Object representation of the current view.
      */
