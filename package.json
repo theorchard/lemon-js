@@ -32,7 +32,7 @@
     "sinon-chai": "^2.5.0"
   },
   "scripts": {
-    "install": "./node_modules/bower/bin/bower install"
+    "install": "./node_modules/bower/bin/bower install --allow-root"
   },
   "devDependencies": {
     "coveralls": "^2.11.2"
