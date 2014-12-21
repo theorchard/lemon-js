@@ -290,7 +290,6 @@ lemon.View = Backbone.View.extend(/** @lends {lemon.View.prototype} */{
      *
      * @param {jQuery.Event} evt The jQuery event.
      * @param {Function=} callback Callback.
-     * @override
      */
     onNavigate: goog.nullFunction,
 
